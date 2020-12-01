@@ -33,7 +33,10 @@ data class Proposal(
 
         @field:NotNull
         @field:Positive
-        val salary: BigDecimal
+        val salary: BigDecimal,
+
+        @Enumerated(EnumType.STRING)
+        var status: ProposalStatus = ProposalStatus.DEFERRED
 ) {
     companion object {
         const val FIND_BY_DOCUMENT: String = "Proposal.findByDocument"
