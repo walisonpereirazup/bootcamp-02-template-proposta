@@ -4,7 +4,8 @@ create table proposals (
     email varchar(255),
     name varchar(255),
     address varchar(255),
-    salary numeric(19, 2) not null,
+    salary numeric(19, 2),
+    card_number varchar(255),
     status varchar(255),
     primary key (id)
 );
