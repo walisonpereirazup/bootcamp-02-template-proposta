@@ -22,20 +22,20 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
 
-  proposal:
-    build:
-      context: .
-    image: proposal:0.0.1-SNAPSHOT
-    environment:
-      - DB_URL=jdbc:postgresql://postgres/proposal
-      - DB_USERNAME=proposal
-      - DB_PASSWORD=cHJvcG9zYWwK
-      - ANALYSIS_URL=http://analise:9999
-      - CARDS_URL=http://contas:8888
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
+#  proposal:
+#    build:
+#      context: .
+#    image: proposal:0.0.1-SNAPSHOT
+#    environment:
+#      - DB_URL=jdbc:postgresql://postgres/proposal
+#      - DB_USERNAME=proposal
+#      - DB_PASSWORD=cHJvcG9zYWwK
+#      - ANALYSIS_URL=http://analise:9999
+#      - CARDS_URL=http://contas:8888
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
 
   postgres:
     image: 'postgres:alpine'

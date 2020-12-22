@@ -1,10 +1,12 @@
 package br.com.zup.credicardzero.proposal
 
+import br.com.zup.credicardzero.card.Card
 import br.com.zup.credicardzero.proposal.Proposal.Companion.FIND_BY_DOCUMENT
 import br.com.zup.credicardzero.proposal.Proposal.Companion.FIND_BY_STATUS
 import java.math.BigDecimal
 import java.util.*
 import javax.persistence.*
+import javax.validation.Valid
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
@@ -42,15 +44,13 @@ data class Proposal(
     val salary: BigDecimal,
 
     @Enumerated(EnumType.STRING)
-    var status: ProposalStatus = ProposalStatus.DEFERRED
+    var status: ProposalStatus = ProposalStatus.DEFERRED,
+
+    @field:NotNull
+    @Valid
+    @OneToOne(mappedBy = "proposal")
+    val card: Card? = null
 ) {
-
-    var cardNumber: String = ""
-        set(value) {
-            field = value
-            status = ProposalStatus.ELIGIBLE_WITH_CARD
-        }
-
     companion object {
         const val FIND_BY_DOCUMENT: String = "Proposal.findByDocument"
         const val FIND_BY_STATUS: String = "Proposal.findByStatus"

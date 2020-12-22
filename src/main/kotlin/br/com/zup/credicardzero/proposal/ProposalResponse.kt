@@ -1,5 +1,6 @@
 package br.com.zup.credicardzero.proposal
 
+import br.com.zup.credicardzero.card.Card
 import java.math.BigDecimal
 import java.util.*
 
@@ -11,7 +12,7 @@ class ProposalResponse(
     val address: String,
     val salary: BigDecimal,
     var status: ProposalStatus,
-    val cardNumber: String,
+    val card: CardResponse?,
 ) {
     constructor(proposal: Proposal) : this(
         id = proposal.id,
@@ -21,6 +22,10 @@ class ProposalResponse(
         address = proposal.address,
         salary = proposal.salary,
         status = proposal.status,
-        cardNumber = proposal.cardNumber
+        card = proposal.card?.let { CardResponse(it) }
     )
+
+    class CardResponse(val cardholderName: String, val cardNumber: String) {
+        constructor(card: Card) : this(card.cardholderName, card.cardNumber)
+    }
 }

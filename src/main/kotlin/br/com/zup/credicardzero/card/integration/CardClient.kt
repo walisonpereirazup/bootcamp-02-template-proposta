@@ -11,4 +11,7 @@ interface CardClient {
     fun card(@Param("idProposta") idProposta: UUID): OutCard
 }
 
-data class OutCard(val id: String)
+data class OutCard(
+    val id: String,
+    val titular: String,
+)

@@ -1,6 +1,8 @@
 package br.com.zup.credicardzero.card.integration
 
+import br.com.zup.credicardzero.card.Card
 import br.com.zup.credicardzero.proposal.Proposal
+import br.com.zup.credicardzero.proposal.ProposalStatus
 import feign.Feign
 import feign.FeignException
 import feign.gson.GsonDecoder
@@ -19,10 +21,17 @@ class CardProcessor(
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     fun processCard(proposal: Proposal) {
         try {
-            val card = buildClient().card(idProposta = proposal.id)
-            proposal.cardNumber = card.id
+            val response = buildClient().card(idProposta = proposal.id)
+            val card = Card(
+                cardholderName = response.titular,
+                cardNumber = response.id,
+                proposal = proposal
+            )
+            entityManager.persist(card)
+            proposal.status = ProposalStatus.ELIGIBLE_WITH_CARD
             entityManager.merge(proposal)
-        } catch (ex: FeignException.UnprocessableEntity) { }
+        } catch (ex: FeignException.UnprocessableEntity) {
+        }
     }
 
     private fun buildClient(): CardClient {

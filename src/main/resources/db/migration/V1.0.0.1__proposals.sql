@@ -5,7 +5,6 @@ create table proposals (
     name varchar(255),
     address varchar(255),
     salary numeric(19, 2),
-    card_number varchar(255),
     status varchar(255),
     primary key (id)
 );
